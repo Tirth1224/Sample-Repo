@@ -11,18 +11,19 @@ const MyCourses = () => {
   const [courses, setCourses] = useState(null);
 
   const fetchEducatorCourses = async () => {
-    setCourses(allCourses);
-    // try {
-    //   const token = await getToken();
-    //   const {data} = await axios.get(backendUrl + '/api/educator/courses', { headers: { Authorization: `Bearer ${token}` } })
-    //   // console.log("data", data.courses);
+    // setCourses(allCourses);
+    try {
+      const token = await getToken();
+      const { data } = await axios.get(backendUrl + "/api/educator/courses", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      // console.log("data", data.courses);
 
-    //   data.success && setCourses(data.courses)
-    // } catch (error) {
-    //   toast.error(error.message)
-    //   console.log(error.message);
-
-    // }
+      data.success && setCourses(data.courses);
+    } catch (error) {
+      toast.error(error.message);
+      console.log(error.message);
+    }
   };
 
   useEffect(() => {

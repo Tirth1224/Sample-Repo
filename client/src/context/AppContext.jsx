@@ -23,17 +23,17 @@ export const AppContextProvider = (props) => {
 
   // fetch all courses
   const fetchAllCourses = async () => {
-    setAllCourses(dummyCourses);
-    // try {
-    //   const { data } = await axios.get(backendUrl + "/api/course/all");
-    //   if (data.success) {
-    //     setAllCourses(data.courses);
-    //   } else {
-    //     toast.error(data.message);
-    //   }
-    // } catch (error) {
-    //   toast.error(error.message);
-    // }
+    // setAllCourses(dummyCourses);
+    try {
+      const { data } = await axios.get(backendUrl + "/api/course/all");
+      if (data.success) {
+        setAllCourses(data.courses);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   // fetch user data
@@ -123,45 +123,45 @@ export const AppContextProvider = (props) => {
   // }
 
   const fetchUserEnrolledCourses = async () => {
-    setEnrolledCourses(dummyCourses);
-    // try {
-    //   const token = await getToken();
-    //   const response = await axios.get(
-    //     backendUrl + "/api/user/enrolled-courses",
-    //     {
-    //       headers: { Authorization: `Bearer ${token}` },
-    //     }
-    //   );
+    // setEnrolledCourses(dummyCourses);
+    try {
+      const token = await getToken();
+      const response = await axios.get(
+        backendUrl + "/api/user/enrolled-courses",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-    //   // console.log("Response:", response); // Debugging: Log full response
+      // console.log("Response:", response); // Debugging: Log full response
 
-    //   if (response.data && response.data.enrolledCourses) {
-    //     setEnrolledCourses(response.data.enrolledCourses.reverse());
-    //   } else {
-    //     toast.error(response.data?.message || "No enrolled courses found.");
-    //   }
-    // } catch (error) {
-    //   console.error("Error fetching courses:", error);
-    //   toast.error(error.response?.data?.message || error.message);
-    // }
+      if (response.data && response.data.enrolledCourses) {
+        setEnrolledCourses(response.data.enrolledCourses.reverse());
+      } else {
+        toast.error(response.data?.message || "No enrolled courses found.");
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      toast.error(error.response?.data?.message || error.message);
+    }
   };
 
   useEffect(() => {
     fetchAllCourses();
-    fetchUserEnrolledCourses();
+    // fetchUserEnrolledCourses();
   }, []);
 
   // useEffect(() => {}, []);
 
-  const logToken = async () => {
-    console.log(await getToken());
-  };
+  // const logToken = async () => {
+  //   console.log(await getToken());
+  // };
 
   useEffect(() => {
     if (user) {
-      // fetchUserData();
-      logToken();
-      // fetchUserEnrolledCourses();
+      fetchUserData();
+      // logToken();
+      fetchUserEnrolledCourses();
     }
   }, [user]);
 

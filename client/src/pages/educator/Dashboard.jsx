@@ -11,23 +11,24 @@ const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
 
   const fetchDashboardData = async () => {
-    setDashboardData(dummyDashboardData);
-    // try {
-    // 	const token = await getToken();
+    // setDashboardData(dummyDashboardData);
+    try {
+      const token = await getToken();
 
-    // 	const {data} = await axios.get(backendUrl + '/api/educator/dashboard', { headers: { Authorization: `Bearer ${token}` } })
+      const { data } = await axios.get(backendUrl + "/api/educator/dashboard", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    // 	// console.log("dashboard data", data.dashboardData);
+      // console.log("dashboard data", data.dashboardData);
 
-    // 	if(data.success){
-    // 		setDashboardData(data.dashboardData)
-    // 	}
-    // 	else{
-    // 		toast.error(data.message)
-    // 	}
-    // } catch (error) {
-    // 	toast.error(error.message)
-    // }
+      if (data.success) {
+        setDashboardData(data.dashboardData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
