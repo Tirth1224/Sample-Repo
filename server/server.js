@@ -16,24 +16,45 @@ const app = express();
 await connectDB();
 await connectCloudinay();
 
+// app.use(
+//   cors({
+//     origin: [
+//       "https://edemy-frontend-xi.vercel.app",
+//       "https://edemyy.vercel.app",
+//       "https://edemy-frontend-git-main-tirthppatel222-gmailcoms-projects.vercel.app",
+//       "https://edemy-frontend-99kiafmq6-tirthppatel222-gmailcoms-projects.vercel.app",
+//       "https://edemy-frontend-tirthppatel222-gmailcoms-projects.vercel.app",
+//       "http://localhost:5173",
+//     ],
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
+
+// // middleware
+// app.use(cors(corsOptions));
+// app.options("*", cors(corsOptions));
+
+const allowedOrigins = [
+  "https://edemy-frontend-xi.vercel.app",
+  "https://edemyy.vercel.app",
+  "https://edemy-frontend-git-main-tirthppatel222-gmailcoms-projects.vercel.app",
+  "https://edemy-frontend-99kiafmq6-tirthppatel222-gmailcoms-projects.vercel.app",
+  "https://edemy-frontend-tirthppatel222-gmailcoms-projects.vercel.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: [
-      "https://edemy-frontend-xi.vercel.app",
-      "https://edemyy.vercel.app",
-      "https://edemy-frontend-git-main-tirthppatel222-gmailcoms-projects.vercel.app",
-      "https://edemy-frontend-99kiafmq6-tirthppatel222-gmailcoms-projects.vercel.app",
-      "https://edemy-frontend-tirthppatel222-gmailcoms-projects.vercel.app",
-      "http://localhost:5173",
-    ],
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
 
-// middleware
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
+// ✅ Preflight requests
+app.options("*", cors());
 app.use(clerkMiddleware());
 
 // Routes
