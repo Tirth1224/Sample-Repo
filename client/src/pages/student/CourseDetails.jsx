@@ -45,18 +45,57 @@ const CourseDetails = () => {
     }
   };
 
+  // const enrollCourse = async () => {
+  //   try {
+  //     if (!userData) {
+  //       return toast.warn("Login to Enroll!");
+  //     }
+  //     if (isAlreadyEnrolled) {
+  //       return toast.warn("Already Enrolled");
+  //     }
+
+  //     const token = await getToken();
+  //     const { data } = await axios.post(
+  //       backendUrl + "/api/user/purchase",
+  //       { courseId: courseData._id },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+
+  //     if (data.success) {
+  //       const { session_url } = data;
+  //       window.location.replace(session_url);
+  //     } else {
+  //       // console.log("data", data);
+  //       toast.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     // console.log("data", data);
+  //     toast.error(error.message);
+  //   }
+  // };
+
   const enrollCourse = async () => {
     try {
       if (!userData) {
         return toast.warn("Login to Enroll!");
       }
+
       if (isAlreadyEnrolled) {
         return toast.warn("Already Enrolled");
       }
 
       const token = await getToken();
+
+      if (!token) {
+        return toast.error("Token not found! Please login again.");
+      }
+
+      if (!courseData || !courseData._id) {
+        return toast.error("Course data missing!");
+      }
+
       const { data } = await axios.post(
-        backendUrl + "/api/user/purchase",
+        `${backendUrl}/api/user/purchase`,
         { courseId: courseData._id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -65,12 +104,11 @@ const CourseDetails = () => {
         const { session_url } = data;
         window.location.replace(session_url);
       } else {
-        // console.log("data", data);
-        toast.error(data.message);
+        toast.error(data.message || "Purchase failed!");
       }
     } catch (error) {
-      // console.log("data", data);
-      toast.error(error.message);
+      console.log("Enrollment error:", error);
+      toast.error(error?.message || "Something went wrong during enrollment.");
     }
   };
 
