@@ -32,7 +32,8 @@ app.use(
 );
 
 // middleware
-app.use(cors());
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(clerkMiddleware());
 
 // Routes
