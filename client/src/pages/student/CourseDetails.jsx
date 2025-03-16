@@ -45,35 +45,6 @@ const CourseDetails = () => {
     }
   };
 
-  // const enrollCourse = async () => {
-  //   try {
-  //     if (!userData) {
-  //       return toast.warn("Login to Enroll!");
-  //     }
-  //     if (isAlreadyEnrolled) {
-  //       return toast.warn("Already Enrolled");
-  //     }
-
-  //     const token = await getToken();
-  //     const { data } = await axios.post(
-  //       backendUrl + "/api/user/purchase",
-  //       { courseId: courseData._id },
-  //       { headers: { Authorization: `Bearer ${token}` } }
-  //     );
-
-  //     if (data.success) {
-  //       const { session_url } = data;
-  //       window.location.replace(session_url);
-  //     } else {
-  //       console.log("data", data);
-  //       toast.error(data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log("data", data);
-  //     toast.error(error.message);
-  //   }
-  // };
-
   const enrollCourse = async () => {
     try {
       if (!userData) {
@@ -84,35 +55,22 @@ const CourseDetails = () => {
       }
 
       const token = await getToken();
-
       const { data } = await axios.post(
-        `${backendUrl}/api/user/purchase`,
+        backendUrl + "/api/user/purchase",
         { courseId: courseData._id },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (data.success) {
         const { session_url } = data;
         window.location.replace(session_url);
       } else {
-        console.log("Enrollment response:", data);
-        toast.error(data.message || "Something went wrong!");
+        console.log("data", data);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.error("Enrollment error:", error);
-
-      // If it's an Axios error and has a response message
-      if (error.response && error.response.data) {
-        toast.error(
-          error.response.data.message || "An error occurred during enrollment."
-        );
-      } else {
-        toast.error(error.message || "An unexpected error occurred.");
-      }
+      console.log("data", data);
+      toast.error(error.message);
     }
   };
 
