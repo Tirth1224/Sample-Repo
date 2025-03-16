@@ -65,11 +65,11 @@ const CourseDetails = () => {
         const { session_url } = data;
         window.location.replace(session_url);
       } else {
-        console.log("data", data);
+        // console.log("data", data);
         toast.error(data.message);
       }
     } catch (error) {
-      console.log("data", data);
+      // console.log("data", data);
       toast.error(error.message);
     }
   };
