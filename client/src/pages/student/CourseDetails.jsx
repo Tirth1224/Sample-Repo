@@ -133,7 +133,8 @@ const CourseDetails = () => {
           <p className="text-sm">
             Course by{" "}
             <span className="text-blue-600 underline">
-              {courseData.educator.name}
+              {/* {courseData.educator.name} */}
+              {courseData.educator?.name || "Unknown Educator"}
             </span>
           </p>
 
